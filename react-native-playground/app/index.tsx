@@ -1,34 +1,62 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Pressable } from "react-native";
+
+const isOnline:boolean = false;
+let spacingValue:number = 0.25;
 
 export default function Index() {
   return (
-    <View style={{ flex: 1, margin: 8 }}>
-      <View style={{ alignItems: "center", flexDirection: "row" }}>
-        <View style={styles.circleOuter}>
-          <View style={styles.circleInner}>
+    <View>
+      <View style={{ flex: 1, margin: 8 }}>
+        { isOnline == true ? (
+          <View style={styles.systemStatus}>
+            <View style={styles.circleOnline}>
+            </View>
+            <Text style={{ fontSize: 16 , fontWeight: 500}}> Systems Online </Text>
           </View>
-        </View>
-        <Text style={{ fontSize: 16 }}> Systems Online </Text>
+        ) : (
+          <View style={styles.systemStatus}>
+            <View style={styles.circleOffline}>
+            </View>
+            <Text style={{letterSpacing: spacingValue, fontSize: 16 , fontWeight: 500}}> Systems Offline </Text>
+          </View>
+        )}
       </View>
+
+      <Pressable style={styles.systemStatus} onPress={ () => { spacingValue += 1} }>
+
+      </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  circleOuter: {
-    width: 32,
-    height: 32,
+  systemStatus: {
+    alignItems: "center",
+    flexDirection: "row",
+    width: '50%',
+    borderRadius: 8,
+    padding: 8,
+    backgroundColor: "white",
+    borderColor: "lightgray",
+    borderWidth: 0.5,
+  },
+  circleOnline: {
+    width: 16,
+    height: 16,
     backgroundColor: "lightgreen",
-    borderRadius: 16,
-    opacity: 0.5,
+    borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 4,
   },
-  circleInner: {
-    width: 20,
-    height: 20,
-    backgroundColor: "green",
-    borderRadius: 12,
-    opacity: 0.5,
+  circleOffline: {
+    width: 16,
+    height: 16,
+    backgroundColor: "red",
+    borderRadius: 8,
+    opacity: 0.7,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 4,
   },
 });
