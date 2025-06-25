@@ -1,29 +1,24 @@
 import { Text, View, StyleSheet, Pressable } from "react-native";
-
-const isOnline:boolean = false;
-let spacingValue:number = 0.25;
+import React, { useState } from "react";
 
 export default function Index() {
+  /*----------------------------- Default Value
+  * --------- Updater Function                |
+  * ---- Variable            V                V */ 
+  const [isOnline, setIsOnline] = useState(true);
+
   return (
-    <View>
-      <View style={{ flex: 1, margin: 8 }}>
-        { isOnline == true ? (
-          <View style={styles.systemStatus}>
-            <View style={styles.circleOnline}>
-            </View>
-            <Text style={{ fontSize: 16 , fontWeight: 500}}> Systems Online </Text>
-          </View>
-        ) : (
-          <View style={styles.systemStatus}>
-            <View style={styles.circleOffline}>
-            </View>
-            <Text style={{letterSpacing: spacingValue, fontSize: 16 , fontWeight: 500}}> Systems Offline </Text>
-          </View>
-        )}
+    <View style={{ marginVertical: 32, marginHorizontal: 16 }}>
+      <View style={styles.systemStatus}>
+        <View style={isOnline ? styles.circleOnline : styles.circleOffline} />
+        <Text style={{ fontSize: 20, letterSpacing: 0.25 }}>
+          System Status: {isOnline ? "Online" : "Offline"}
+        </Text>
       </View>
-
-      <Pressable style={styles.systemStatus} onPress={ () => { spacingValue += 1} }>
-
+      <Pressable style={styles.statusUpdater} onPress={() => setIsOnline(!isOnline)}>
+        <Text style={{ fontSize: 20, letterSpacing: 0.25 }}>
+          Set Status {isOnline ? "Offline" : "Online"}
+        </Text>
       </Pressable>
     </View>
   );
@@ -33,12 +28,20 @@ const styles = StyleSheet.create({
   systemStatus: {
     alignItems: "center",
     flexDirection: "row",
-    width: '50%',
+    width: '75%',
     borderRadius: 8,
     padding: 8,
     backgroundColor: "white",
     borderColor: "lightgray",
-    borderWidth: 0.5,
+    borderWidth: 1,
+  },
+  statusUpdater: {
+    padding: 8,
+    backgroundColor: "white",
+    borderColor: "lightgray",
+    borderWidth: 1,
+    borderRadius: 8,
+    width: '75%'
   },
   circleOnline: {
     width: 16,
